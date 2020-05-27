@@ -1,4 +1,4 @@
-let elctrodeExHiddenLegends = {
+const elctrodeExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_5.png",
   cardType: "Pokemon",
   name: "Electrode",
@@ -23,7 +23,7 @@ let elctrodeExHiddenLegends = {
   setNumber: ["5 / 101"],
   rare: "Holo Rare",
 };
-let ninetalesExtraExHiddenLegends = {
+const ninetalesExtraExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_96.png",
   cardType: "Pokemon",
   name: "Ninetales ex",
@@ -48,7 +48,7 @@ let ninetalesExtraExHiddenLegends = {
   setNumber: ["96/ 101"],
   rare: "Rare Holo EX",
 };
-let pinsirExHiddenLegends = {
+const pinsirExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_13.png",
   cardType: "Pokemon",
   name: "Pinsir",
@@ -70,7 +70,7 @@ let pinsirExHiddenLegends = {
   setNumber: ["13 / 101"],
   rare: "HoloRare",
 };
-let voltrobExHiddenLegends = {
+const voltrobExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_90.png",
   cardType: "Pokemon",
   name: "Voltrob",
@@ -94,7 +94,7 @@ let voltrobExHiddenLegends = {
   setNumber: ["80 / 101"],
   rare: "Common",
 };
-let vulpixExHiddenLegends = {
+const vulpixExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_81.png",
   cardType: "Pokemon",
   name: "Vulpix",
@@ -115,7 +115,7 @@ let vulpixExHiddenLegends = {
   setNumber: ["81 / 101"],
   rare: "Common",
 };
-let jirachiExHiddenLegends = {
+const jirachiExHiddenLegends = {
   picLink: "../img/cards/ex5/ex5_8.png",
   cardType: "Pokemon",
   name: "Jirachi",
@@ -141,7 +141,7 @@ let jirachiExHiddenLegends = {
   rare: "HoloRare",
 };
 
-let collection = [
+const collection = [
   pinsirExHiddenLegends,
   vulpixExHiddenLegends,
   ninetalesExtraExHiddenLegends,
@@ -159,13 +159,13 @@ const sortByName = (arr) => {
 
 const addOl2Html = (pokemons) => {
   sortByName(pokemons);
-  let list = document.querySelector("body");
-  let orderedList = document.createElement("ol");
+  const list = document.querySelector("body");
+  const orderedList = document.createElement("ol");
   orderedList.classList.add("pokeList");
   list.appendChild(orderedList);
-  let temp = document.querySelector(".pokeList");
+  const temp = document.querySelector(".pokeList");
   for (let i = 0; i < pokemons.length; i++) {
-    let listItem = document.createElement("li");
+    const listItem = document.createElement("li");
     listItem.textContent = pokemons[i].name;
     temp.appendChild(listItem);
   }
