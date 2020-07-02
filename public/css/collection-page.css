@@ -20,7 +20,7 @@ header {
 }
 
 .collection-list {
-  grid-area: 2 / 1 / 3 / 2;
+  grid-area: 1 / 1 / 2 / 2;
 }
 .card-img {
   grid-area: 1 / 3 / 4 / 4;
@@ -39,8 +39,3 @@ header h1 {
 .card-here {
   background-color: rgb(235, 233, 233);
 }
-/* .shadow {
-  background-color: #ffffff;
-  position: relative;
-  box-shadow: 9px 12px 5px 0px rgba(12, 12, 12, 0.63);
-} */

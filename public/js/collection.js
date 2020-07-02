@@ -7,7 +7,7 @@ const elctrodeExHiddenLegends = {
   HP: 70,
   illustrator: "Kyoko Umemoto",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["lightning"],
       name: "Swift",
@@ -38,7 +38,7 @@ const ninetalesExtraExHiddenLegends = {
   HP: 90,
   illustrator: "Ryo Ueda",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Intense Glare",
@@ -76,7 +76,7 @@ const pinsirExHiddenLegends = {
         "Any damage done to Pinsir by attacks from your opponent's Basic Pokémon is reduced by 30 (after applying Weakness and Resistance).",
     },
   ],
-  attack: [
+  attacks: [
     {
       cost: ["grass", "colorless"],
       name: "Sonicboom",
@@ -99,7 +99,7 @@ const voltrobExHiddenLegends = {
   HP: 40,
   illustrator: "Kyoko Umemoto",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Recharge",
@@ -129,7 +129,7 @@ const vulpixExHiddenLegends = {
   HP: 50,
   illustrator: "Toshinao Aoki",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Scratch",
@@ -159,7 +159,7 @@ const jirachiExHiddenLegends = {
   HP: 70,
   illustrator: "Ryo Ueda",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Make a Wish",
@@ -181,6 +181,61 @@ const jirachiExHiddenLegends = {
   rare: "HoloRare",
 };
 
+const koffingRebelClash = {
+  picLink: "SWSH2/SWSH2_EN_112.png",
+  cardType: "Pokemon",
+  name: "Koffing",
+  type: ["dark"],
+  stage: "Basic",
+  HP: 70,
+  illustrator: "Kyoko Umemoto",
+  set: "Rebel Clash",
+  attacks: [
+    {
+      cost: ["dark"],
+      name: "Suffocating Gas",
+      power: 10,
+      text: null,
+    },
+  ],
+  weakness: ["fighting"],
+  resistence: [],
+  retreatCost: ["colorless"],
+  setNumber: 112,
+  rare: "Common",
+};
+const galarianWeezingRebelClash = {
+  picLink: "SWSH2/SWSH2_EN_113.png",
+  cardType: "Pokemon",
+  name: "Galarian Weezing",
+  type: ["dark"],
+  stage: "Stage 1",
+  HP: 130,
+  illustrator: "Mitsuhiro Arita",
+  set: "Rebel Clash",
+  abilities: [
+    {
+      name: "Neutralizing Gas",
+      text:
+        "As long as this Pokémon is in the Active Spot, your opponent’s Pokémon in play have no Abilities, except for Neutralizing Gas.",
+    },
+  ],
+  attacks: [
+    {
+      cost: ["dark"],
+      name: "Severe Poison",
+      power: "",
+      text:
+        "Your opponent’s Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.",
+    },
+  ],
+  weakness: ["fighting"],
+  resistence: [],
+  retreatCost: ["colorless"],
+  setNumber: 112,
+  rare: "Common",
+};
+
 const collection = [
   pinsirExHiddenLegends,
   vulpixExHiddenLegends,
@@ -188,6 +243,8 @@ const collection = [
   voltrobExHiddenLegends,
   elctrodeExHiddenLegends,
   jirachiExHiddenLegends,
+  koffingRebelClash,
+  galarianWeezingRebelClash,
 ];
 const sortByPokmeonName = (a, b) => {
   return a.name.localeCompare(b.name);
@@ -198,7 +255,6 @@ const sortArray = (array, fn) => {
   return newArray;
 };
 // sortArray(collection, sortByPokmeonName);
-debugger;
 const renderListOfPokemon = (pokemons) => {
   const orderedList = document.createElement("ol");
   for (let i = 0; i < pokemons.length; i++) {
@@ -243,36 +299,50 @@ const removePreviewCardElement = () => {
     document.removeEventListener("keyup", onDocumentKeyUp);
   }
 };
-debugger;
-const createPokemonTextPreviewCard = (card) => {
-  // const textPreviewTemplate = `
-  //   <div class = "text-element">
-  //     <p class="card--type">Card Type: ${card.cardType}</p>
-  //     <p class="card--name">Name: ${card.name}</p>
-  //     <p class="pokemon--type">Type: ${card.type}</p>
-  //     <p class="card--stage">Stage: ${card.stage}</p>
-  //     <p class="card--HP">HP: ${card.HP}</p>
-  //     <p class="attack"> Attack: cost:${card.attack[0].cost} - name:${card.attack[0].name} - power:${card.attack[0].power} - text: ${card.attack[0].text} </p>
-  //     <p class="card--illustrator">Illustrator: ${card.illustrator}</p>
-  //     <p class="card--set">Set: ${card.set}</p>
-  //     <p class="card--weakness">Weakness: ${card.weakness}</p>
-  //     <p class="card--resistence">Resistence: ${card.resistence}</p>
-  //     <p class="card--retreat-сost">Retreat cost: ${card.set}</p>
-  //     <p class="card--set-number">Set Number: ${card.setNumber}</p>
-  //     <p class="card--rarity">Rarity: ${card.rare}</p>
-  //   </div>
-  // `;
-  // const textPreviewElement = createElementFrom(textPreviewTemplate);
-  // return textPreviewElement;
-  let paragraph = "";
-  const div = `<div class="text-element"></div>`;
-  const newDiv = createElementFrom(div);
-  Object.values(card).forEach((value) => {
-    paragraph = `<p>${value}</p>`;
-    const paragraphElement = createElementFrom(paragraph);
-    newDiv.appendChild(paragraphElement);
+
+const renderAbility = (abilities) => {
+  if (!abilities) {
+    return "";
+  }
+  let abilitiesP = "";
+  abilities.forEach((ability) => {
+    abilitiesP += `<p class="card--ability">${ability.name}-${ability.text}</p>`;
   });
-  return newDiv;
+  return abilitiesP;
+};
+
+const renderAttacks = (attacks) => {
+  if (!attacks) {
+    return "";
+  }
+  let attackP = "";
+  attacks.forEach((attack) => {
+    attackP += `<p class="card--attack">cost:${attack.cost} - name:${attack.name} - power:${attack.power} - text: ${attack.text} </p>`;
+  });
+  return attackP;
+};
+
+const createPokemonTextPreviewCard = (card) => {
+  const textPreviewTemplate = `
+    <div class = "text-element">
+      <p class="card--type">Card Type: ${card.cardType}</p>
+      <p class="card--name">Name: ${card.name}</p>
+      <p class="pokemon--type">Type: ${card.type}</p>
+      <p class="card--stage">Stage: ${card.stage}</p>
+      <p class="card--HP">HP: ${card.HP}</p>
+      ${renderAbility(card.abilities)}
+      ${renderAttacks(card.attacks)}
+      <p class="card--illustrator">Illustrator: ${card.illustrator}</p>
+      <p class="card--set">Set: ${card.set}</p>
+      <p class="card--weakness">Weakness: ${card.weakness}</p>
+      <p class="card--resistence">Resistence: ${card.resistence}</p>
+      <p class="card--retreat-сost">Retreat cost: ${card.retreatCost}</p>
+      <p class="card--set-number">Set Number: ${card.setNumber}</p>
+      <p class="card--rarity">Rarity: ${card.rare}</p>
+    </div>
+  `;
+  const textPreviewElement = createElementFrom(textPreviewTemplate);
+  return textPreviewElement;
 };
 // функция создания превью
 const createPreviewCard = (card) => {
@@ -338,4 +408,3 @@ const generateList = (cards) => {
 
 const pokemonOrderedList = generateList(collection);
 document.getElementById("collection-list").appendChild(pokemonOrderedList);
-
