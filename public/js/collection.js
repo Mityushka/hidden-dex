@@ -182,7 +182,7 @@ const jirachiExHiddenLegends = {
 };
 
 const koffingRebelClash = {
-  picLink: "SWSH2/SWSH2_EN_112.png",
+  picLink: "swsh2/swsh2_112.png",
   cardType: "Pokemon",
   name: "Koffing",
   type: ["dark"],
@@ -205,7 +205,7 @@ const koffingRebelClash = {
   rare: "Common",
 };
 const galarianWeezingRebelClash = {
-  picLink: "SWSH2/SWSH2_EN_113.png",
+  picLink: "swsh2/swsh2_113.png",
   cardType: "Pokemon",
   name: "Galarian Weezing",
   type: ["dark"],
@@ -231,9 +231,9 @@ const galarianWeezingRebelClash = {
   ],
   weakness: ["fighting"],
   resistence: [],
-  retreatCost: ["colorless"],
-  setNumber: 112,
-  rare: "Common",
+  retreatCost: ["colorless", "colorless", "colorless"],
+  setNumber: 113,
+  rare: "rare",
 };
 
 const collection = [
