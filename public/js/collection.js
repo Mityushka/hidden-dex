@@ -7,7 +7,7 @@ const elctrodeExHiddenLegends = {
   HP: 70,
   illustrator: "Kyoko Umemoto",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["lightning"],
       name: "Swift",
@@ -38,7 +38,7 @@ const ninetalesExtraExHiddenLegends = {
   HP: 90,
   illustrator: "Ryo Ueda",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Intense Glare",
@@ -91,7 +91,7 @@ const pinsirExHiddenLegends = {
   rare: "HoloRare",
 };
 const voltrobExHiddenLegends = {
-  picLink: "ex5/ex5_90.png",
+  picLink: "ex5/ex5_80.png",
   cardType: "Pokemon",
   name: "Voltrob",
   type: ["lightning"],
@@ -99,7 +99,7 @@ const voltrobExHiddenLegends = {
   HP: 40,
   illustrator: "Kyoko Umemoto",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Recharge",
@@ -129,7 +129,7 @@ const vulpixExHiddenLegends = {
   HP: 50,
   illustrator: "Toshinao Aoki",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Scratch",
@@ -159,7 +159,7 @@ const jirachiExHiddenLegends = {
   HP: 70,
   illustrator: "Ryo Ueda",
   set: "Hidden Legends",
-  attack: [
+  attacks: [
     {
       cost: ["colorless"],
       name: "Make a Wish",
@@ -181,6 +181,61 @@ const jirachiExHiddenLegends = {
   rare: "HoloRare",
 };
 
+const koffingRebelClash = {
+  picLink: "swsh2/swsh2_112.png",
+  cardType: "Pokemon",
+  name: "Koffing",
+  type: ["dark"],
+  stage: "Basic",
+  HP: 70,
+  illustrator: "Kyoko Umemoto",
+  set: "Rebel Clash",
+  attacks: [
+    {
+      cost: ["dark"],
+      name: "Suffocating Gas",
+      power: 10,
+      text: null,
+    },
+  ],
+  weakness: ["fighting"],
+  resistence: [],
+  retreatCost: ["colorless"],
+  setNumber: 112,
+  rare: "Common",
+};
+const galarianWeezingRebelClash = {
+  picLink: "swsh2/swsh2_113.png",
+  cardType: "Pokemon",
+  name: "Galarian Weezing",
+  type: ["dark"],
+  stage: "Stage 1",
+  HP: 130,
+  illustrator: "Mitsuhiro Arita",
+  set: "Rebel Clash",
+  abilities: [
+    {
+      name: "Neutralizing Gas",
+      text:
+        "As long as this Pokémon is in the Active Spot, your opponent’s Pokémon in play have no Abilities, except for Neutralizing Gas.",
+    },
+  ],
+  attacks: [
+    {
+      cost: ["dark"],
+      name: "Severe Poison",
+      power: "",
+      text:
+        "Your opponent’s Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.",
+    },
+  ],
+  weakness: ["fighting"],
+  resistence: [],
+  retreatCost: ["colorless", "colorless", "colorless"],
+  setNumber: 113,
+  rare: "rare",
+};
+
 const collection = [
   pinsirExHiddenLegends,
   vulpixExHiddenLegends,
@@ -188,6 +243,8 @@ const collection = [
   voltrobExHiddenLegends,
   elctrodeExHiddenLegends,
   jirachiExHiddenLegends,
+  koffingRebelClash,
+  galarianWeezingRebelClash,
 ];
 const sortByPokmeonName = (a, b) => {
   return a.name.localeCompare(b.name);
@@ -197,8 +254,7 @@ const sortArray = (array, fn) => {
   newArray.sort(fn);
   return newArray;
 };
-sortArray(collection, sortByPokmeonName);
-
+// sortArray(collection, sortByPokmeonName);
 const renderListOfPokemon = (pokemons) => {
   const orderedList = document.createElement("ol");
   for (let i = 0; i < pokemons.length; i++) {
@@ -208,4 +264,147 @@ const renderListOfPokemon = (pokemons) => {
   }
   return orderedList;
 };
-document.body.appendChild(renderListOfPokemon(collection));
+// -> Начало
+
+//функция прерывания дефолтного действия
+const stopDefAction = (evt) => evt.preventDefault();
+// универсальная функция создания элемента | ВСПОМОГАТЕЛЬНАЯ
+const createElementFrom = (template) => {
+  const temporaryElement = document.createElement("div");
+  temporaryElement.innerHTML = template.trim();
+  return temporaryElement.firstChild;
+};
+
+// <-
+// функция удаления картинки по нажатию "ESC"
+const onDocumentKeyUp = (evt) => {
+  if (evt.code === "Escape") {
+    removePreviewCardElement();
+  }
+};
+
+// непосредственно функция удаления превью
+const removePreviewCardElement = () => {
+  const cardElement = document.querySelector(".preview-card"); // находим превью
+  const textElement = document.querySelector(".text-element");
+  if (cardElement) {
+    // если существует -> удаляем и подчищаем обработчик
+    cardElement.remove();
+    document.removeEventListener("keyup", onDocumentKeyUp);
+    document.body.classList.remove("card-here");
+  }
+  if (textElement) {
+    // если существует -> удаляем и подчищаем обработчик
+    textElement.remove();
+    document.removeEventListener("keyup", onDocumentKeyUp);
+  }
+};
+
+const renderAbility = (abilities) => {
+  if (!abilities) {
+    return "";
+  }
+  let abilitiesP = "";
+  abilities.forEach((ability) => {
+    abilitiesP += `<p class="card--ability">${ability.name}-${ability.text}</p>`;
+  });
+  return abilitiesP;
+};
+
+const renderAttacks = (attacks) => {
+  if (!attacks) {
+    return "";
+  }
+  let attackP = "";
+  attacks.forEach((attack) => {
+    attackP += `<p class="card--attack">cost:${attack.cost} - name:${attack.name} - power:${attack.power} - text: ${attack.text} </p>`;
+  });
+  return attackP;
+};
+
+const createPokemonTextPreviewCard = (card) => {
+  const textPreviewTemplate = `
+    <div class = "text-element">
+      <p class="card--type">Card Type: ${card.cardType}</p>
+      <p class="card--name">Name: ${card.name}</p>
+      <p class="pokemon--type">Type: ${card.type}</p>
+      <p class="card--stage">Stage: ${card.stage}</p>
+      <p class="card--HP">HP: ${card.HP}</p>
+      ${renderAbility(card.abilities)}
+      ${renderAttacks(card.attacks)}
+      <p class="card--illustrator">Illustrator: ${card.illustrator}</p>
+      <p class="card--set">Set: ${card.set}</p>
+      <p class="card--weakness">Weakness: ${card.weakness}</p>
+      <p class="card--resistence">Resistence: ${card.resistence}</p>
+      <p class="card--retreat-сost">Retreat cost: ${card.retreatCost}</p>
+      <p class="card--set-number">Set Number: ${card.setNumber}</p>
+      <p class="card--rarity">Rarity: ${card.rare}</p>
+    </div>
+  `;
+  const textPreviewElement = createElementFrom(textPreviewTemplate);
+  return textPreviewElement;
+};
+// функция создания превью
+const createPreviewCard = (card) => {
+  const previewCardTemplate = `
+    <div class="preview-card">
+      <p>${card.name} <button class="preview-card--close">Close</button></p>
+      <img src="./img/cards/${card.picLink}">
+    </div>
+  `; // непосредственно превьюшка(с кнопкой) | ПЕРЕПИСАТЬ
+  const previewCardElement = createElementFrom(previewCardTemplate);
+  const closeCardElement = previewCardElement.querySelector(
+    ".preview-card--close"
+  );
+  closeCardElement.addEventListener("click", removePreviewCardElement); // обработчик на закрытие по клику
+  document.addEventListener("keyup", onDocumentKeyUp); // обработчик на нажатие "ESC"
+  return previewCardElement;
+};
+
+// ->
+// функция наполнения _КНОПКИ_ | ВСПОМОГАТЕЛЬНАЯ
+const generateCardTemplate = (card) => {
+  return `<a href ="">${card.name} — HP ${card.HP} </a>`;
+};
+
+// фабричная функция создания  превью | РАЗОБРАТЬ
+const onCardClickFactory = (card) => {
+  return () => {
+    removePreviewCardElement();
+    const previewCardElement = createPreviewCard(card);
+    const previewTextElement = createPokemonTextPreviewCard(card);
+    document.getElementById("card-img").appendChild(previewCardElement);
+    document.getElementById("card-text").appendChild(previewTextElement);
+    document.body.classList.add("card-here");
+  };
+};
+
+// функция создания _КНОПКИ_
+const createCardElement = (card) => {
+  const cardElement = createElementFrom(generateCardTemplate(card)); //наполнение _КНОПКИ_
+  cardElement.addEventListener("click", stopDefAction);
+  cardElement.addEventListener("click", onCardClickFactory(card)); // обработчик на _КНОПКУ_
+  return cardElement;
+};
+
+// функция создания пустого элемента списка
+const generateCardDefaultLiTemplate = (inner = "") => {
+  return `<li class="cards-default-list--item">${inner}</li>`;
+};
+// функция создания ордеред листа
+const generateList = (cards) => {
+  const listTemplate = `<ol class="cards-default-list"></ol>`;
+  const pokemonOrderedList = createElementFrom(listTemplate);
+
+  cards.forEach((card) => {
+    const liElement = createElementFrom(generateCardDefaultLiTemplate());
+    const cardElement = createCardElement(card);
+    liElement.appendChild(cardElement);
+    pokemonOrderedList.appendChild(liElement);
+  });
+
+  return pokemonOrderedList;
+};
+
+const pokemonOrderedList = generateList(collection);
+document.getElementById("collection-list").appendChild(pokemonOrderedList);
