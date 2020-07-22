@@ -14,17 +14,16 @@
     return newArray;
   };
 
-  const stopDefAction = (evt) => evt.preventDefault();
-
-  const onDocumentKeyUp = (evt) => {
-    if (evt.code === "Escape") {
-      window.rendering.removePreviewCardElement();
-    }
+  const createElementFrom = (template) => {
+    const temporaryElement = document.createElement("div");
+    temporaryElement.innerHTML = template.trim();
+    return temporaryElement.firstChild;
   };
-  window.support = {
+
+
+  window.utility = {
     sortByPokmeonName,
     sortArray,
-    stopDefAction,
-    onDocumentKeyUp,
+    createElementFrom,
   }
 })();

@@ -251,16 +251,23 @@
     koffingRebelClash,
     galarianWeezingRebelClash,
   ];
+  // функция с возвратом массива вместо массива
 
-  window.pokemons = {
-    elctrodeExHiddenLegends,
-    ninetalesExtraExHiddenLegends,
-    pinsirExHiddenLegends,
-    voltrobExHiddenLegends,
-    vulpixExHiddenLegends,
-    jirachiExHiddenLegends,
-    koffingRebelClash,
-    galarianWeezingRebelClash
+  const generateCollection = () => [...collection];
+
+  window.data = {
+    get: generateCollection,
   };
-  window.collection = collection;
+
 })();
+
+
+
+
+
+
+
+
+
+
+

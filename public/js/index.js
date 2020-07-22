@@ -2,9 +2,11 @@
 'use strict'; // переводим браузер в строгий режим
 //iife модуль
 (() => {
-  window.support.sortArray(collection, window.support.sortByPokmeonName);
 
-  const pokemonOrderedList = window.rendering.generateList(collection);
+  const sortedCollection = window.utility.sortArray(window.data.get(), window.utility.sortByPokmeonName);
+
+  const pokemonOrderedList = window.collection.generate(sortedCollection);
 
   document.getElementById("collection-list").appendChild(pokemonOrderedList);
-})()
+
+})();
