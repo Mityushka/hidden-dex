@@ -16,7 +16,7 @@
       {
         cost: ["lightning"],
         name: "Swift",
-        power: "30",
+        power: 30,
         text:
           "This attack's damage isn't affected by Weakness, Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.",
       },
@@ -185,7 +185,6 @@
     setNumber: 8,
     rare: "HoloRare",
   };
-
   const koffingRebelClash = {
     picLink: "swsh2/swsh2_112.png",
     cardType: "Pokemon",
@@ -229,7 +228,7 @@
       {
         cost: ["dark"],
         name: "Severe Poison",
-        power: "",
+        power: null,
         text:
           "Your opponent’s Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.",
       },
@@ -240,7 +239,74 @@
     setNumber: 113,
     rare: "rare",
   };
-
+  const pikachuVVividVoltage = {
+    picLink: "swsh4/SWSH4_EN_43.png",
+    cardType: "Pokemon",
+    name: "Pikachu V",
+    type: ["lightning"],
+    stage: "Basic",
+    HP: 190,
+    illustrator: "Saki Hayashiro",
+    set: "Vivid Voltage",
+    attacks: [
+      {
+        cost: ["lightning"],
+        name: "Charge",
+        power: null,
+        text:
+          "Search your deck for up to 2 Lightning Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+      },
+      {
+        cost: ["lightning", "lightning", "colorless"],
+        name: "Thunderbolt",
+        power: 200,
+        text:
+          "Discard all Energy from this Pokémon",
+      },
+    ],
+    weakness: ["fighting"],
+    resistence: [],
+    retreatCost: ["colorless"],
+    setNumber: 43,
+    rare: "Holo Rare V",
+  };
+  const pikachuVMaxVividVoltage = {
+    picLink: "swsh4/SWSH4_EN_44.png",
+    cardType: "Pokemon",
+    name: "Pikachu VMax",
+    type: ["lightning"],
+    stage: "VMax",
+    HP: 310,
+    illustrator: "aky CG Works",
+    set: "Vivid Voltage",
+    attacks: [
+      {
+        cost: ["lightning","lightning","lightning"],
+        name: "Charge",
+        power: "120",
+        text:
+          "Search your deck for up to 2 Lightning Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+      },
+    
+    ],
+    weakness: ["fighting"],
+    resistence: [],
+    retreatCost: ["colorless",'colorless'],
+    setNumber: 44,
+    rare: "Holo Rare VMAX",
+  };
+  const pokémonCenterLadyVividVoltage = {
+    picLink: "swsh4/SWSH4_EN_185.png",
+    cardType: "Trainer",
+    name: "Pokémon Center Lady",
+    type: "Supporter",
+    illustrator: "Sanosuke Sakuma",
+    set: "Vivid Voltage",
+    Effect: "Heal 60 damage from 1 of your Pokémon, and it recovers from all Special Conditions",
+    setNumber: 185,
+    rare: "Ultra Rare",
+  };
+  
   const collection = [
     pinsirExHiddenLegends,
     vulpixExHiddenLegends,
@@ -250,6 +316,9 @@
     jirachiExHiddenLegends,
     koffingRebelClash,
     galarianWeezingRebelClash,
+    pikachuVVividVoltage,
+    pikachuVMaxVividVoltage,
+    pokémonCenterLadyVividVoltage,
   ];
   // функция с возвратом массива вместо массива
 

@@ -5,13 +5,14 @@
 
 (() => {
 
+
   // функция наполнения _КНОПКИ_
-  const generateCardTemplate = (card) => {
+  const generateLiTemplate = (card) => {
     return `<a href ="">${card.name} — HP ${card.HP} </a>`;
   };
 
   const createCardElement = (card) => {
-    const cardElement = window.utility.createElementFrom(generateCardTemplate(card)); //наполнение _КНОПКИ_
+    const cardElement = window.utility.createElementFrom(generateLiTemplate(card)); //наполнение _КНОПКИ_
     cardElement.addEventListener("click", window.cardPreview.onCardClickFactory(card)); // обработчик на _КНОПКУ_
     return cardElement;
   };
@@ -21,7 +22,7 @@
   };
   // функция создания ордеред листа
   const generateList = (cards) => {
-    const listTemplate = `<ol class="cards-default-list"></ol>`;
+    const listTemplate = `<ol class="card-grid__list"></ol>`;
     const pokemonOrderedList = window.utility.createElementFrom(listTemplate);
 
     cards.forEach((card) => {
@@ -33,6 +34,48 @@
 
     return pokemonOrderedList;
   };
+
+
+
+  const generateVisualTemplate = (card) => {
+    return `<img src="./img/cards/${card.picLink}">`;
+  };
+
+  const generateVisualList = (cards) => {
+    const newDiv = `<div class="card-grid__visual-list"></div>`
+    const visualList = window.utility.createElementFrom(newDiv);
+
+    cards.forEach(card => {
+      const cardItem = generateVisualTemplate(card);
+      const cardElement = window.utility.createElementFrom(cardItem);
+      cardElement.addEventListener("click", window.cardPreview.onCardClickFactory(card));
+      visualList.appendChild(cardElement);
+    });
+    return visualList;
+  }
+
+
+  const onChangeViewMode = (event) => {
+    event.preventDefault();
+    const targetInput = event.target;
+    const viewMode = targetInput.value;
+    if (viewMode == "list") {
+      document.querySelector('.card-grid__visual-list').remove();
+
+      const pokemonOrderedList = generateList(window.index.sortedCollection);
+      document.getElementById("collection-list").appendChild(pokemonOrderedList);
+    } else {
+      document.querySelector('.card-grid__list').remove();
+
+      const pokemonVisualList = generateVisualList(window.index.sortedCollection);
+      document.getElementById("collection-list").appendChild(pokemonVisualList);
+    }
+  };
+
+
+  const viewModeForm = document.querySelector('#form-view-mode');
+  viewModeForm.addEventListener('change', onChangeViewMode, true);
+
 
   window.collection = {
     generate: generateList,

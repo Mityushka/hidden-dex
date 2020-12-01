@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hidden Dex</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <meta charset='utf-8'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='css/style.css'>
 </head>
 
 <body>
-  <h1>Hidden Dex</h1>
-  <div class="container" id="container">
-    <div class="collection-list" id="collection-list"></div>
-    <div class="card-img" id="card-img"></div>
-    <div class="card-text" id="card-text"></div>
-  </div>
+  <div class="container">
+    <div class="card-grid">
+      <h1 class="card-grid__header">Hidden Dex</h2>
 
+        <form id="form-view-mode" action="" method="post">
+          <input type="radio" name="view-mode" id="" value="list" checked> list
+          <input type="radio" name="view-mode" id="" value="visual"> visual
+          <button type="submit" hidden>Submit</button>
+        </form>
+
+        <div class="card-grid__inner" id="collection-list"></div>
+
+        <div class="card-grid__modal">
+          <div class="modal_content">
+            <div class="modal__card-img" id="card-img"></div>
+            <div class="modal__card-text" id="card-text"></div>
+          </div>
+        </div>
+
+    </div>
+  </div>
   <script src="js/data.js"></script>
   <script src="js/card-list.js"></script>
   <script src="js/card-preview.js"></script>

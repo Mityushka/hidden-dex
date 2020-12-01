@@ -8,5 +8,7 @@
   const pokemonOrderedList = window.collection.generate(sortedCollection);
 
   document.getElementById("collection-list").appendChild(pokemonOrderedList);
-
+  window.index = {
+    sortedCollection
+  }
 })();

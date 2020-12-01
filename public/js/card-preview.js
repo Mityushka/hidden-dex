@@ -3,6 +3,7 @@
 //iife модуль
 
 (() => {
+
   const onDocumentKeyUp = (evt) => {
     if (evt.code === "Escape") {
       removePreviewCardElement();
@@ -12,6 +13,10 @@
   const removePreviewCardElement = () => {
     const cardElement = document.querySelector(".preview-card"); // находим превью
     const textElement = document.querySelector(".text-element");
+    const modalElement = document.querySelector(".card-grid__modal")
+    if (modalElement.style.display != "none") {
+      modalElement.style.display = "none";
+    }
     if (cardElement) {
       // если существует -> удаляем и подчищаем обработчик
       cardElement.remove();
@@ -92,11 +97,13 @@
     return (evt) => {
       evt.preventDefault();
       removePreviewCardElement();
+      const modalElement = document.querySelector(".card-grid__modal");
       const previewCardElement = createPreviewCard(card);
       const previewTextElement = createPokemonTextPreviewCard(card);
+      // const modalElement = document.querySelector(".card-grid__modal")
       document.getElementById("card-img").appendChild(previewCardElement);
       document.getElementById("card-text").appendChild(previewTextElement);
-      document.body.classList.add("card-here");
+      modalElement.style.display = "block";
     };
   };
 
@@ -104,8 +111,4 @@
     onCardClickFactory // Переписать на нормальное имя | переписать вызов и как мы вешаем обработчик
 
   }
-
-
-
-
 })()
